@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>서울시 자치구청 종합 포털 | 서울 구청 사이트 소개 및 찾기</title>
+  
+  <!-- SEO 메타 태그 -->
+  <meta name="description" content="서울시 25개 자치구청의 공식 홈페이지, 민원실 포털 서비스, 대표 전화번호, 도로명 주소를 한눈에 모아보세요. 내 위치 기준으로 가장 인접한 구청 찾기 및 스마트 권역별 필터 검색을 제공합니다.">
+  <meta name="keywords" content="서울시 구청, 서울 구청 주소, 서울 구청 전화번호, 강남구청, 종로구청, 서초구청, 구청 민원실, 가까운 구청 찾기, 서울 자치구">
+  <meta name="author" content="Seoul District Directory">
+  
+  <!-- Open Graph / 페이스북 -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="서울시 자치구청 종합 포털">
+  <meta property="og:description" content="서울시 25개 자치구청의 공식 홈페이지 및 민원 창구 정보를 확인하고, 위치 기반 가까운 구청 찾기 서비스를 이용하세요.">
+  
+  <!-- 트위터 -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:title" content="서울시 자치구청 종합 포털">
+  <meta property="twitter:description" content="서울시 25개 자치구청의 공식 홈페이지 및 민원 창구 정보를 확인하고, 위치 기반 가까운 구청 찾기 서비스를 이용하세요.">
+  
+  <!-- 파비콘 (기본) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏢</text></svg>">
+  
+  <!-- 스타일시트 로드 -->
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- 헤더 섹션 -->
+    <header class="app-header">
+      <div class="logo-group">
+        <h1>SEOUL DISTRICTS <span>포털</span></h1>
+        <p>서울시 25개 자치구청 공식 홈페이지 및 주요 안내 통합 가이드</p>
+      </div>
+      <div class="header-controls">
+        <button id="proximityBtn" class="proximity-btn" aria-label="내 주변 구청 찾기">
+          <span>📍</span> 내 주변 구청 찾기
+        </button>
+        <button id="themeToggle" class="theme-toggle" aria-label="테마 스타일 전환">
+          ☀️
+        </button>
+      </div>
+    </header>
+
+    <!-- 메인 레이아웃 -->
+    <main class="main-content">
+      
+      <!-- 좌측 열: 지도 및 북마크 -->
+      <section class="left-section">
+        
+        <!-- 격자 맵 (카토그램) -->
+        <article class="glass-panel">
+          <div class="panel-title">
+            <span>🗺️ 서울시 카토그램 격자 지도</span>
+          </div>
+          <div class="cartogram-container">
+            <div id="cartogramGrid" class="cartogram-grid" role="grid" aria-label="서울시 행정구역 격자 지도">
+              <!-- JS에서 셀을 동적으로 생성하고 배치합니다 -->
+            </div>
+            
+            <div class="map-legend">
+              <div class="legend-item">
+                <span class="legend-color" style="background: var(--accent-amber);"></span>
+                <span>중부</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-color" style="background: var(--accent-blue);"></span>
+                <span>동부</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-color" style="background: var(--accent-emerald);"></span>
+                <span>서부</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-color" style="background: var(--accent-cyan);"></span>
+                <span>북부</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-color" style="background: var(--accent-rose);"></span>
+                <span>남부</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-color" style="border: 1px dashed var(--accent-cyan); animation: pulse-border 2s infinite;"></span>
+                <span>가장 가까움 (★)</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 자주 찾는 북마크 -->
+        <article class="glass-panel">
+          <div class="panel-title">
+            <span>⭐ 자주 찾는 구청 북마크</span>
+          </div>
+          <div id="favoritesList" class="favorites-list">
+            <!-- JS에서 동적으로 북마크된 카드가 로드됩니다 -->
+          </div>
+        </article>
+
+      </section>
+
+      <!-- 우측 열: 검색, 상세정보, 목록 -->
+      <section class="right-section">
+
+        <!-- 상세정보 프로필 패널 -->
+        <article class="glass-panel">
+          <div class="panel-title">
+            <span>🔍 구청 상세 프로필</span>
+          </div>
+          <div id="profilePanel" class="profile-panel">
+            <!-- JS에서 선택된 구청의 세부 프로필을 활성화합니다 -->
+          </div>
+        </article>
+
+        <!-- 검색 및 스마트 필터 -->
+        <article class="glass-panel">
+          <div class="search-filter-box">
+            <div class="search-input-wrapper">
+              <span class="search-icon">🔍</span>
+              <input type="text" id="searchInput" class="search-input" placeholder="구청 이름, 영문명, 슬로건 키워드 검색... (초성 검색 가능)" aria-label="구청 검색창">
+            </div>
+            
+            <!-- 권역 필터 태그 -->
+            <div id="filterTags" class="filter-tags" role="group" aria-label="권역 필터 버튼 그룹">
+              <!-- JS에서 생성 -->
+            </div>
+
+            <!-- 정렬 필터 -->
+            <div class="sort-select-wrapper">
+              <label for="sortSelect">정렬 방식:</label>
+              <select id="sortSelect" class="sort-select">
+                <option value="name">가나다 이름순</option>
+                <option value="distance">가까운 거리순</option>
+              </select>
+            </div>
+          </div>
+        </article>
+
+        <!-- 구청 전체 목록 리스트 -->
+        <article class="glass-panel">
+          <div class="panel-title">
+            <span>🏢 자치구청 전체 목록</span>
+          </div>
+          <div id="districtList" class="district-grid">
+            <!-- JS에서 동적 구청 카드들이 그리드 형태로 추가됩니다 -->
+          </div>
+        </article>
+
+      </section>
+
+    </main>
+
+    <!-- 푸터 섹션 -->
+    <footer class="app-footer">
+      <p>&copy; 2026 서울시 자치구청 포털 (Seoul District Directory). All rights reserved.</p>
+      <p style="margin-top: 0.5rem; font-size: 0.75rem;">본 사이트는 각 자치구청 공식 홈페이지로 연결되며, 안내된 정보는 지자체 사정에 따라 다소 변경될 수 있습니다.</p>
+    </footer>
+
+  </div>
+
+  <!-- 토스트 알림창 -->
+  <div id="toast" class="toast-msg" role="status" aria-live="polite"></div>
+
+  <!-- 스크립트 파일 로드 -->
+  <script src="app.js"></script>
+</body>
+</html>

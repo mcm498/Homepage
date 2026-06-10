@@ -1,0 +1,797 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Outfit:wght@300;400;500;600;700&display=swap');
+
+/* --- 디자인 시스템 토큰 --- */
+:root {
+  --font-sans: 'Outfit', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  
+  /* 다크 테마 기본 변수 (기본값) */
+  --bg-primary: #090d16;
+  --bg-secondary: #121826;
+  --bg-glass: rgba(18, 24, 38, 0.7);
+  --bg-glass-active: rgba(30, 41, 59, 0.8);
+  --border-glass: rgba(255, 255, 255, 0.08);
+  --border-glass-hover: rgba(6, 182, 212, 0.4);
+  
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  
+  --accent-cyan: #06b6d4;
+  --accent-blue: #3b82f6;
+  --accent-emerald: #10b981;
+  --accent-amber: #f59e0b;
+  --accent-rose: #f43f5e;
+  
+  --glow-cyan: rgba(6, 182, 212, 0.15);
+  --glow-emerald: rgba(16, 185, 129, 0.15);
+  
+  --shadow-sm: 0 2px 8px -1px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 10px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 16px -6px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 20px 40px -10px rgba(0, 0, 0, 0.5), 0 12px 24px -8px rgba(0, 0, 0, 0.5);
+  
+  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+}
+
+/* 라이트 테마 변수 */
+body.light-theme {
+  --bg-primary: #f8fafc;
+  --bg-secondary: #ffffff;
+  --bg-glass: rgba(255, 255, 255, 0.75);
+  --bg-glass-active: rgba(241, 245, 249, 0.9);
+  --border-glass: rgba(15, 23, 42, 0.08);
+  --border-glass-hover: rgba(6, 182, 212, 0.5);
+  
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  
+  --glow-cyan: rgba(6, 182, 212, 0.08);
+  --glow-emerald: rgba(16, 185, 129, 0.08);
+  
+  --shadow-sm: 0 2px 8px -1px rgba(15, 23, 42, 0.08);
+  --shadow-md: 0 10px 25px -5px rgba(15, 23, 42, 0.1), 0 8px 16px -6px rgba(15, 23, 42, 0.05);
+  --shadow-lg: 0 20px 40px -10px rgba(15, 23, 42, 0.12), 0 12px 24px -8px rgba(15, 23, 42, 0.06);
+}
+
+/* --- 기본 스타일 리셋 --- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  transition: background-color var(--transition-normal), color var(--transition-normal);
+  overflow-x: hidden;
+  background-image: 
+    radial-gradient(circle at 10% 20%, var(--glow-cyan) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, var(--glow-emerald) 0%, transparent 40%);
+  background-attachment: fixed;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button, input, select {
+  font-family: inherit;
+  border: none;
+  outline: none;
+  background: none;
+}
+
+/* --- 레이아웃 & 컨테이너 --- */
+.app-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* 헤더 영역 */
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  background: var(--bg-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+}
+
+.logo-group h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logo-group h1 span {
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-glass);
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  -webkit-text-fill-color: initial;
+}
+
+.logo-group p {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-top: 0.25rem;
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* 테마 스위치 */
+.theme-toggle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--bg-glass);
+  border: 1px solid var(--border-glass);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-primary);
+  font-size: 1.25rem;
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-sm);
+}
+
+.theme-toggle:hover {
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 15px var(--glow-cyan);
+  transform: rotate(15deg);
+}
+
+/* 내 주변 찾기 버튼 */
+.proximity-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+  color: #ffffff;
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-md);
+}
+
+.proximity-btn:hover {
+  opacity: 0.95;
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
+}
+
+.proximity-btn.loading {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* --- 메인 콘텐츠 그리드 --- */
+.main-content {
+  display: grid;
+  grid-template-columns: 1.2fr 1.8fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+@media (max-width: 1024px) {
+  .main-content {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 좌측 섹션 (지도 & 즐겨찾기) */
+.left-section {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* 우측 섹션 (프로필 & 리스트) */
+.right-section {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* --- 카드 디자인 패턴 (Glassmorphism) --- */
+.glass-panel {
+  background: var(--bg-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-md);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.panel-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-left: 4px solid var(--accent-cyan);
+  padding-left: 0.75rem;
+}
+
+/* --- 인터랙티브 카토그램 (격자 지도) --- */
+.cartogram-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+/* 11열 * 9행으로 배치하는 서울시 격자 맵 */
+.cartogram-grid {
+  display: grid;
+  grid-template-columns: repeat(10, minmax(40px, 1fr));
+  gap: 6px;
+  width: 100%;
+  max-width: 500px;
+}
+
+.map-cell {
+  aspect-ratio: 1;
+  background: var(--bg-glass);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  color: var(--text-secondary);
+  user-select: none;
+  position: relative;
+}
+
+/* 권역별 파스텔 색상 배경 부여 */
+.map-cell[data-region="central"] { border-left: 3px solid var(--accent-amber); }
+.map-cell[data-region="east"] { border-left: 3px solid var(--accent-blue); }
+.map-cell[data-region="west"] { border-left: 3px solid var(--accent-emerald); }
+.map-cell[data-region="north"] { border-left: 3px solid var(--accent-cyan); }
+.map-cell[data-region="south"] { border-left: 3px solid var(--accent-rose); }
+
+.map-cell:hover {
+  background: var(--bg-glass-active);
+  border-color: var(--accent-cyan);
+  color: var(--text-primary);
+  transform: scale(1.08) translateY(-2px);
+  z-index: 10;
+  box-shadow: 0 5px 15px var(--glow-cyan);
+}
+
+.map-cell.active {
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(59, 130, 246, 0.2));
+  border-color: var(--accent-cyan);
+  color: var(--text-primary);
+  box-shadow: 0 0 15px var(--glow-cyan);
+}
+
+.map-cell.closest {
+  animation: pulse-border 2s infinite;
+}
+
+.map-cell.closest::after {
+  content: '★';
+  position: absolute;
+  top: 2px;
+  right: 4px;
+  color: var(--accent-amber);
+  font-size: 0.65rem;
+}
+
+@keyframes pulse-border {
+  0% {
+    box-shadow: 0 0 0 0 rgba(6, 182, 212, 0.4);
+    border-color: var(--accent-cyan);
+  }
+  70% {
+    box-shadow: 0 0 0 6px rgba(6, 182, 212, 0);
+    border-color: var(--accent-blue);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(6, 182, 212, 0);
+    border-color: var(--accent-cyan);
+  }
+}
+
+/* 격자 지도의 지리적 레이아웃 배치를 위한 Grid-Area 수동 맵핑 */
+.cell-dobong { grid-column: 6; grid-row: 1; }
+.cell-gangbuk { grid-column: 5; grid-row: 2; }
+.cell-nowon { grid-column: 7; grid-row: 2; }
+.cell-eunpyeong { grid-column: 3; grid-row: 3; }
+.cell-seongbuk { grid-column: 5; grid-row: 3; }
+.cell-jungnang { grid-column: 8; grid-row: 3; }
+.cell-seodaemun { grid-column: 3; grid-row: 4; }
+.cell-jongno { grid-column: 4; grid-row: 4; }
+.cell-dongdaemun { grid-column: 6; grid-row: 4; }
+.cell-gangdong { grid-column: 9; grid-row: 4; }
+.cell-mapo { grid-column: 2; grid-row: 5; }
+.cell-junggu { grid-column: 4; grid-row: 5; }
+.cell-seongdong { grid-column: 6; grid-row: 5; }
+.cell-gwangjin { grid-column: 7; grid-row: 5; }
+.cell-songpa { grid-column: 8; grid-row: 5; }
+.cell-yongsan { grid-column: 4; grid-row: 6; }
+.cell-seocho { grid-column: 5; grid-row: 6; }
+.cell-gangnam { grid-column: 6; grid-row: 6; }
+.cell-gangseo { grid-column: 1; grid-row: 7; }
+.cell-yangcheon { grid-column: 2; grid-row: 7; }
+.cell-yeongdeungpo { grid-column: 3; grid-row: 7; }
+.cell-dongjak { grid-column: 4; grid-row: 7; }
+.cell-gwanak { grid-column: 5; grid-row: 7; }
+.cell-guro { grid-column: 2; grid-row: 8; }
+.cell-geumcheon { grid-column: 3; grid-row: 9; }
+
+/* 빈공간 가이드용 텍스트 */
+.map-legend {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.legend-color {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}
+
+/* --- 검색 및 필터 패널 --- */
+.search-filter-box {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.search-input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.search-input {
+  width: 100%;
+  background: var(--bg-glass-active);
+  border: 1px solid var(--border-glass);
+  color: var(--text-primary);
+  padding: 0.85rem 1rem 0.85rem 2.5rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem;
+  transition: all var(--transition-fast);
+}
+
+.search-input:focus {
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 10px var(--glow-cyan);
+}
+
+.search-icon {
+  position: absolute;
+  left: 0.85rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+}
+
+.filter-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.filter-tag {
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  background: var(--bg-glass-active);
+  border: 1px solid var(--border-glass);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.filter-tag:hover, .filter-tag.active {
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+  border-color: transparent;
+  color: #ffffff;
+  box-shadow: var(--shadow-sm);
+}
+
+.sort-select-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: flex-end;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.sort-select {
+  background: var(--bg-glass-active);
+  border: 1px solid var(--border-glass);
+  color: var(--text-primary);
+  padding: 0.35rem 1rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+/* --- 즐겨찾기 목록 --- */
+.favorites-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.favorites-list:empty::after {
+  content: '북마크한 구청이 없습니다. 우측 카드 또는 목록에서 별표(★)를 탭해 보세요.';
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  text-align: center;
+  padding: 1rem 0;
+  font-style: italic;
+}
+
+.favorite-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-glass-active);
+  border: 1px solid var(--border-glass);
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-sm);
+  transition: transform var(--transition-fast);
+}
+
+.favorite-card:hover {
+  transform: translateX(4px);
+}
+
+.fav-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.fav-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.fav-region {
+  font-size: 0.7rem;
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+}
+
+/* --- 구청 목록 그리드 & 카드 --- */
+.district-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+  max-height: 520px;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+/* 목록 스크롤바 커스텀 */
+.district-grid::-webkit-scrollbar {
+  width: 6px;
+}
+.district-grid::-webkit-scrollbar-track {
+  background: transparent;
+}
+.district-grid::-webkit-scrollbar-thumb {
+  background: var(--border-glass);
+  border-radius: 3px;
+}
+.district-grid::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+.district-card {
+  background: var(--bg-glass);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-sm);
+  padding: 1rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.district-card:hover {
+  background: var(--bg-glass-active);
+  border-color: var(--accent-cyan);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.district-card.active {
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 15px var(--glow-cyan);
+}
+
+.card-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-title {
+  font-size: 1rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.pin-btn {
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: color var(--transition-fast), transform var(--transition-fast);
+  background: none;
+  border: none;
+}
+
+.pin-btn:hover {
+  transform: scale(1.2);
+}
+
+.pin-btn.pinned {
+  color: var(--accent-amber);
+}
+
+.card-slogan {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  font-size: 0.7rem;
+}
+
+.card-distance {
+  color: var(--accent-cyan);
+  font-weight: 600;
+}
+
+/* --- 상세 정보 프로필 패널 --- */
+.profile-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.profile-panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
+}
+
+.profile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top: 0.5rem;
+}
+
+.profile-title-group h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.profile-title-group span {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-family: 'Outfit', sans-serif;
+}
+
+.profile-slogan {
+  background: var(--bg-glass-active);
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--accent-cyan);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.profile-details-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.85rem;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  background: var(--bg-glass-active);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+}
+
+.detail-label {
+  color: var(--text-secondary);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.detail-value {
+  color: var(--text-primary);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.copy-btn {
+  background: var(--bg-glass);
+  color: var(--text-secondary);
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  cursor: pointer;
+  border: 1px solid var(--border-glass);
+  transition: all var(--transition-fast);
+}
+
+.copy-btn:hover {
+  background: var(--accent-cyan);
+  color: #ffffff;
+  border-color: transparent;
+}
+
+/* 프로필 하단 액션 버튼 그룹 */
+.profile-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.action-link-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.85rem;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all var(--transition-fast);
+  text-align: center;
+  cursor: pointer;
+}
+
+.action-link-btn.primary {
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(59, 130, 246, 0.15));
+  border: 1px solid var(--accent-cyan);
+  color: var(--accent-cyan);
+}
+
+.action-link-btn.primary:hover {
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+  color: #ffffff;
+  box-shadow: 0 0 15px var(--glow-cyan);
+  transform: translateY(-1px);
+}
+
+.action-link-btn.secondary {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(59, 130, 246, 0.15));
+  border: 1px solid var(--accent-emerald);
+  color: var(--accent-emerald);
+}
+
+.action-link-btn.secondary:hover {
+  background: linear-gradient(135deg, var(--accent-emerald), var(--accent-blue));
+  color: #ffffff;
+  box-shadow: 0 0 15px var(--glow-emerald);
+  transform: translateY(-1px);
+}
+
+/* --- 카피 문구 & 토스트 --- */
+.toast-msg {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--bg-glass-active);
+  border: 1px solid var(--accent-cyan);
+  color: var(--text-primary);
+  padding: 0.75rem 1.5rem;
+  border-radius: 30px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  box-shadow: var(--shadow-lg);
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.toast-msg.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+/* 푸터 */
+.app-footer {
+  text-align: center;
+  padding: 1.5rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border-glass);
+}
